@@ -9,7 +9,9 @@ public class Main {
 	
 	public static String art(int i) {
 		String[] hangmanStages = {
-		           """
+				"""
+				 =========
+				""","""
 		           +---+
 		           |   |
 		               |
@@ -69,8 +71,7 @@ public class Main {
 		return hangmanStages[i];
 		}
 
-	
-    public static String randomWord() {
+	public static String randomWord() {
 		
 		String[] words = {"useful", "random", "hangman", "console", "application", "represent", "underscore", "example", "reveal"};
 		
@@ -79,6 +80,7 @@ public class Main {
 		
 		return words[randIndex];
 	}
+	
 	
 	public static void main(String[] args) {
 		
@@ -94,11 +96,12 @@ public class Main {
 	 splitAnswer.forEach(letter -> {hiddenAnswer.add("_");});
 	 
 	 // game logic
-	 System.out.println(splitAnswer);
 
 	 
-	 while(amountOfWrongGuesses < amountOfGuesses){
+	 while(amountOfWrongGuesses < amountOfGuesses && hiddenAnswer.contains("_")){
+		 System.out.println(art(amountOfWrongGuesses));
 		 System.out.println(hiddenAnswer);
+		 
 		 Scanner s = new Scanner(System.in);
 		 
 		 System.out.println("Guess a letter:");
@@ -106,37 +109,34 @@ public class Main {
 		 String userGuess = s.next();
 		 
 		 if(splitAnswer.contains(userGuess)) {
+		
 			 int indexToSet = splitAnswer.indexOf(userGuess);
 			 // loop through the splitanswer array and insert the value into hiddenanswerarry at the index
 			 int lastIndex = splitAnswer.lastIndexOf(userGuess);
 			 
-			 if(indexToSet==lastIndex) {
+			 if(indexToSet == lastIndex) {
 				 hiddenAnswer.set(indexToSet, userGuess);
 			 } else {
-				 for(int i = 0; i < splitAnswer.size(); ++i) {
-					 splitAnswer.get(i).equals(userGuess) ? 
+				 
+				 ArrayList<Integer> indices = new ArrayList<>(); 
+				 
+				 for (int i = 0; i < splitAnswer.size(); ++i) {
+					 if(splitAnswer.get(i).equals(userGuess)) {
+						 indices.add(i);
+					 }
 				 }
+				 indices.forEach(index -> {hiddenAnswer.set(index, userGuess);});
 			 }
-			 
-			 
-//			 splitAnswer.forEach(letter, index -> { 
-//				 if(letter != userGuess) { 
-//					 hiddenAnswer.set(indexToSet, userGuess);
-//					 }
-//				 }
-//			 );
-			 
-//			 System.out.println(indexToSet);
+
 		 } else {
 			 amountOfWrongGuesses += 1;
-//			 System.out.printf("Wrong guesses: %i", amountOfWrongGuesses);
-//			 System.out.println(amountOfWrongGuesses);
-			 System.out.println(art(amountOfWrongGuesses-1));
-			 
 		 }
 		 
 	 }
-	 System.out.println("Game Over");
+	 
+	 System.out.println(art(amountOfWrongGuesses));
+	 System.out.println(hiddenAnswer);
+	 System.out.println(hiddenAnswer.contains("_") ? "Game Over. You Lost" : "Congratulations You Won!");
 	 
 
 	}
