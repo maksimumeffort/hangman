@@ -104,9 +104,14 @@ public class Main {
 		 
 		 Scanner s = new Scanner(System.in);
 		 
+//		 System.out.println("Guessing a letter or the word: ");
+//		 System.out.print("[letter/ word]> ");
+//		 String userChoice = s.next();
+		 
+		 
 		 System.out.println("Guess a letter:");
 		 System.out.print("> ");
-		 String userGuess = s.next();
+		 String userGuess = s.next().toLowerCase();
 		 
 		 if(splitAnswer.contains(userGuess)) {
 		
